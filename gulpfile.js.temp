@@ -1,0 +1,52 @@
+const { series, parallel, src, dest } = require('gulp');
+const uglify = require('gulp-uglify')
+function build(cb) {
+    console.log('build')
+    cb();
+}
+
+function clean(cb) {
+    console.log('clean')
+    cb();
+}
+
+function hello(cb) {
+    console.log('hello')
+    cb();
+}
+
+function javascript(cb) {
+    console.log('javascript');
+    cb();
+}
+function css(cb) {
+    console.log('css');
+    cb();
+}
+
+function transfile(cb) {
+    console.log('transfile', process.env.NODE_ENV);
+    cb();
+}
+
+function minify(cb) {
+    console.log('minify');
+    cb();
+}
+function liveload(cb) {
+    console.log('liveload');
+    cb();
+}
+function uglifys(cb) {
+    return src('src/*.js')
+        .pipe(uglify())
+        .pipe(dest('dist/'));
+}
+
+if (process.env.NODE_ENV === 'production') {
+    exports.build = parallel(transfile, minify);
+} else {
+    exports.build = parallel(transfile, liveload);
+}
+exports.default = series(clean, build);
+exports.uglifys = uglifys;
